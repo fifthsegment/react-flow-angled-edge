@@ -10,17 +10,17 @@
     "smart",
     "edge",
     "pathfinding",
-    "react-flow-smart-edge"
+    "react-flow-angled-edge"
   ],
-  "homepage": "https://tisoap.github.io/react-flow-smart-edge/",
+  "homepage": "https://github.com/fifthsegment/react-flow-angled-edge",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tisoap/react-flow-smart-edge.git"
+    "url": "https://github.com/fifthsegment/react-flow-angled-edge.git"
   },
   "license": "MIT",
-  "author": "Tiso Alvarez Puccinelli",
+  "author": "Tiso Alvarez Puccinelli, Abdullah",
   "main": "dist/index.js",
-  "module": "dist/react-flow-smart-edge.esm.js",
+  "module": "dist/react-flow-angled-edge.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
