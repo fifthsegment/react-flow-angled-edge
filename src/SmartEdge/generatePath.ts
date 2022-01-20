@@ -1,5 +1,5 @@
-import { TraceFinder, Heuristic } from 'pathfinding';
-import type { Grid } from 'pathfinding';
+import {SimpleFinder} from './Finder';
+import type { Grid } from '../pathfinding-core/Grid';
 import type { XYPosition } from 'react-flow-renderer';
 
 //BestFirstFinder
@@ -21,14 +21,7 @@ declare module 'pathfinding' {
   diagonalMovement: DiagonalMovement.Always,
 };*/
 
-const withDiagonalMovement = {
-  allowDiagonal: true,
-  dontCrossCorners: true
-}
 
-const withStraightMovement = {
-  allowDiagonal: false,
-};
 
 export const generatePath = (
   grid: Grid,
@@ -36,30 +29,25 @@ export const generatePath = (
   end: XYPosition,
   lessCorners: boolean
 ) => {
-  const defaultOptions = {
-    heuristic: Heuristic.octile,
-    weight: 2,
+  const finderOptions = {  
+    allowDiagonal: lessCorners ? true : false,
+    dontCrossCorners: true
   };
-  const finderOptions = Object.assign(lessCorners
-    ? withStraightMovement
-    : withDiagonalMovement, defaultOptions);
 
 
-  const finder = new TraceFinder(finderOptions);
+  const finder = new SimpleFinder(finderOptions);
 
   let fullPath: number[][] = [];
-  let smoothedPath: number[][] = [];
 
   try {
     fullPath = finder.findPath(start.x, start.y, end.x, end.y, grid);
     //smoothedPath = Util.smoothenPath(grid, fullPath);
     //_ = Util;
-    smoothedPath = fullPath;
   } catch {
     // No path was found. This can happen if the end point is "surrounded"
     // by other nodes, or if the starting and ending nodes are on top of
     // each other.
   }
 
-  return { fullPath, smoothedPath };
+  return { fullPath };
 };

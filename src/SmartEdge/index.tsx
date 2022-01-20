@@ -88,7 +88,7 @@ const PathFindingEdge = memo((props: PathFindingEdgeProps) => {
     }
   }*/
   // We then can use the grid representation to do pathfinding
-  const { fullPath, smoothedPath } = generatePath(
+  const { fullPath } = generatePath(
     grid,
     start,
     end,
@@ -102,7 +102,6 @@ const PathFindingEdge = memo((props: PathFindingEdgeProps) => {
       "paths": fullPath
     }
   }
-  console.log("window.PathStore", window.PathStore);
 
   /*
     Fallback to BezierEdge if no path was found.
@@ -110,7 +109,7 @@ const PathFindingEdge = memo((props: PathFindingEdgeProps) => {
     length = 1: starting and ending points are the same
     length = 2: a single straight line from point A to point B
   */
-  if (smoothedPath.length <= 2) {
+  if (fullPath.length <= 2) {
     if (lineType === 'curve') {
       return <BezierEdge {...props} />;
     }
@@ -118,7 +117,7 @@ const PathFindingEdge = memo((props: PathFindingEdgeProps) => {
   }
 
   // Here we convert the grid path to a sequence of graph coordinates.
-  const graphPath = smoothedPath.map((gridPoint) => {
+  const graphPath = fullPath.map((gridPoint) => {
     const [x, y] = gridPoint;
     const graphPoint = gridToGraphPoint(
       { x, y },
