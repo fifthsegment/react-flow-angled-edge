@@ -1,4 +1,4 @@
-import {SimpleFinder} from './Finder';
+import {FinderAStar} from './FinderAStar';
 import type { Grid } from '../pathfinding-core/Grid';
 import type { XYPosition } from 'react-flow-renderer';
 
@@ -29,13 +29,16 @@ export const generatePath = (
   end: XYPosition,
   lessCorners: boolean
 ) => {
-  const finderOptions = {  
+  /*const finderOptions = {  
     allowDiagonal: lessCorners ? true : false,
     dontCrossCorners: true
+  };*/
+  lessCorners ? 0: 0;
+
+  const finderOptions = {  
+    weight: 8
   };
-
-
-  const finder = new SimpleFinder(finderOptions);
+  const finder = new FinderAStar(finderOptions);
 
   let fullPath: number[][] = [];
 

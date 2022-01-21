@@ -9,7 +9,8 @@ import {
 } from 'react-flow-renderer';
 import { createGrid, PointInfo } from './createGrid';
 import { drawSmoothLinePath, drawStraightLinePath } from './drawSvgPath';
-import { generatePath } from './generatePath';
+import { generatePath } from './generatePathSimple';
+
 import { getBoundingBoxes } from './getBoundingBoxes';
 import { gridToGraphPoint } from './pointConversion';
 import type { EdgeProps, Node } from 'react-flow-renderer';

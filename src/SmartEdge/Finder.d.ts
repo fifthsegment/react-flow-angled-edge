@@ -1,14 +1,21 @@
 import Grid from '../pathfinding-core/Grid';
 
-interface FinderOptions {
+interface SimpleFinderOptions {
   allowDiagonal : boolean;
   dontCrossCorners: boolean;
 }
-interface Finder {
+
+interface AStarFinderOptions {
+  allowDiagonal : boolean;
+  dontCrossCorners: boolean;
+}
+
+export interface Finder {
   findPath(startX: number, startY: number, endX: number, endY: number, matrix: Grid): number[][];
 }
 interface SimpleFinder extends Finder {
   new (): SimpleFinder;
-  new (opt: FinderOptions): SimpleFinder;
+  new (opt: SimpleFinderOptions): SimpleFinder;
 }
+
 export var SimpleFinder: SimpleFinder;
