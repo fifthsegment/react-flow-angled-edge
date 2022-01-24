@@ -52,5 +52,5 @@ export const generatePath = (
     // each other.
   }
 
-  return { fullPath };
+  return  fullPath ;
 };

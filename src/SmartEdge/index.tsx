@@ -24,8 +24,30 @@ declare global {
   interface Window { PathStore: any; }
 }
 
-window.PathStore = window.PathStore || {};
 
+function isOverlapping(x:Number, y:Number) {
+  for (let key in window.PathStore) {
+    const paths = window.PathStore[key].paths;
+    for (let index = 0; index < paths.length; index++) {
+      const element = paths[index];
+      if (x == element[0] && y == element[1]) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/*function getPathStoreOverlap(edge:string) {
+  for (let key in window.PathStore) {
+    //if (window.PathStore[key] == edge) {
+      if (key == edge && window.PathStore[key].overlapping) { 
+        return 10
+      }
+    //}
+  }
+  return 0
+}*/
 
 const PathFindingEdge = memo((props: PathFindingEdgeProps) => {
   const {
@@ -66,10 +88,11 @@ const PathFindingEdge = memo((props: PathFindingEdgeProps) => {
   };
   
   const target: PointInfo = {
-    x: targetX + (data.offsetXtarget || 0),
-    y: targetY + (data.offsetYtarget || 0),
+    x: targetX + (data.offsetXtarget || 0) - 3,
+    y: targetY + (data.offsetYtarget || 0) + Math.round(10), //getPathStoreOverlap(id),
     position: targetPosition,
   };
+  console.log("target", target);
 
   // With this information, we can create a 2D grid representation of
   // our graph, that tells us where in the graph there is a "free" space or not
@@ -81,28 +104,86 @@ const PathFindingEdge = memo((props: PathFindingEdgeProps) => {
     gridRatio
   );
   //console.log("nodes", nodes);
-  /*for (let key in window.PathStore) {
-    const paths = window.PathStore[key].paths;
-    for (let index = 0; index < paths.length; index++) {
-      const element = paths[index];
-      grid.setWalkableAt(element[0], element[1], false);
-    }
-  }*/
+  
   // We then can use the grid representation to do pathfinding
-  const { fullPath } = generatePath(
+  let fullPath = generatePath(
     grid,
     start,
     end,
     lessCorners
   );
-
-  if (!window.PathStore) {
-    window.PathStore = {}
-  } else {
-    window.PathStore[id] = {
-      "paths": fullPath
+  //let overlap = false;
+  //let overlapX = false;
+  //let overlapY = false;
+  //let xAtOverlap = 0;
+  //let yAtOverlap = 0;
+  let overlappingPoints = 0;
+  for (let index = 0; index < fullPath.length; index++) {
+    const element = fullPath[index];
+    const x = element[0];
+    const y = element[1];
+    if (isOverlapping(x, y) ) {
+      /*if (xAtOverlap != 0) {
+        xAtOverlap = x;
+        yAtOverlap = y;
+      } else {
+        if (xAtOverlap + 1  == x) {
+          xAtOverlap = x;
+          fullPath[index] = [x-3, y]
+        }
+        if (yAtOverlap + 1  == y) {
+          yAtOverlap = y;
+          fullPath[index] = [x, y-3]
+        }
+      }*/
+      overlappingPoints++;
+      
+      //fullPath[index] = [element[0] - 5, element[1] - 5 ]
+      //grid.setWalkableAt(element[0], element[1], false)
+      //overlap = true;
     }
   }
+
+  console.log("Overlapping points", overlappingPoints);
+
+  if (overlappingPoints > 50) {
+    /*for (let index = 0; index < fullPath.length; index++) {
+      const element = fullPath[index];
+      fullPath[index] = [element[0]-5, element[1] - 5 ]
+    }*/
+    /*
+    let t = {
+      x: target.x,
+      y: target.y+5,
+      position: target.position,
+    };
+    //console.log(t)
+    fullPath = generatePath(
+      grid,
+      start,
+      t,
+      lessCorners
+    );
+    */
+    if (!window.PathStore) {
+      window.PathStore = {}
+    } else {
+      window.PathStore[id] = {
+        "paths": fullPath,
+        "overlapping" : true,
+      }
+    }
+  } else {
+    if (!window.PathStore) {
+      window.PathStore = {}
+    } else {
+      window.PathStore[id] = {
+        "paths": fullPath
+      }
+    }
+  }
+
+
 
   /*
     Fallback to BezierEdge if no path was found.
@@ -174,7 +255,6 @@ const PathFindingEdge = memo((props: PathFindingEdgeProps) => {
 
 const DebouncedPathFindingEdge = memo((props: EdgeProps) => {
   const storeNodes = useStoreState((state) => {
-    console.log("state", state)
     return state.nodes
   } );
   const { debounceTime } = useSmartEdge();

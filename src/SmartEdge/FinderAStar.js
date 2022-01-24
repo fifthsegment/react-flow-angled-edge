@@ -56,15 +56,12 @@ function FinderAStar(opt) {
         // pop the position of node which has the minimum `f` value.
         node = openList.pop();
         node.closed = true;
-        console.log("node", node, node === endNode);
         // if reached the end position, construct the path and return it
         if (node === endNode) {
             return Util.backtrace(endNode);
         }
-        console.log("Getting neighbors", grid);
         // get neigbours of the current node
         neighbors = grid.getNeighbors(node, false, false);
-        console.log("neighbors", neighbors);
         for (i = 0, l = neighbors.length; i < l; ++i) {
             neighbor = neighbors[i];
 

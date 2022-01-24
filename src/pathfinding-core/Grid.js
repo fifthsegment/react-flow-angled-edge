@@ -133,7 +133,6 @@ Grid.prototype.setWalkableAt = function(x, y, walkable) {
  * @param {boolean} dontCrossCorners
  */
 Grid.prototype.getNeighbors = function(node, allowDiagonal, dontCrossCorners) {
-    console.log("Inside get neighbors");
     var x = node.x,
         y = node.y,
         neighbors = [],

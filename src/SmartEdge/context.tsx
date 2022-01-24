@@ -12,8 +12,8 @@ export type SmartEdgeOptions = {
 };
 
 const defaultOptions: SmartEdgeOptions = {
-  debounceTime: 200,
-  nodePadding: 1,
+  debounceTime: 25,
+  nodePadding: 5,
   gridRatio: 1,
   lineType: 'straight',
   lessCorners: true,
