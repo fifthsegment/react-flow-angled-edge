@@ -2,7 +2,7 @@
  * @namespace PF.Heuristic
  * @description A collection of heuristic functions.
  */
-module.exports = {
+var Heuristic = {
 
   /**
    * Manhattan distance.
@@ -46,3 +46,7 @@ module.exports = {
   }
 
 };
+
+export {
+    Heuristic
+}

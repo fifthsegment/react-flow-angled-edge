@@ -1,6 +1,7 @@
 var Heap       = require('heap');
-var Util       = require('../pathfinding-core/Util');
-var Heuristic  = require('../pathfinding-core/Heuristic');
+//var Util       = require('../pathfinding-core/Util');
+import * as Util from '../pathfinding-core/Util';
+import {Heuristic} from '../pathfinding-core/Heuristic';
 
 /**
  * A* path-finder. Based upon https://github.com/bgrins/javascript-astar
@@ -47,20 +48,23 @@ function FinderAStar(opt) {
     // push the start node into the open list
     openList.push(startNode);
     startNode.opened = true;
-
+    //console.log("openlist", openList );
+    //console.log("weight", weight);
+    //console.log("heuristic", heuristic);
     // while the open list is not empty
     while (!openList.empty()) {
         // pop the position of node which has the minimum `f` value.
         node = openList.pop();
         node.closed = true;
-
+        console.log("node", node, node === endNode);
         // if reached the end position, construct the path and return it
         if (node === endNode) {
             return Util.backtrace(endNode);
         }
-
+        console.log("Getting neighbors", grid);
         // get neigbours of the current node
-        neighbors = grid.getNeighbors(node, false);
+        neighbors = grid.getNeighbors(node, false, false);
+        console.log("neighbors", neighbors);
         for (i = 0, l = neighbors.length; i < l; ++i) {
             neighbor = neighbors[i];
 

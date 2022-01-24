@@ -1,4 +1,4 @@
-var Node = require('./Node');
+import {Node} from './Node'
 
 /**
  * The Grid class, which serves as the encapsulation of the layout of the nodes.
@@ -133,6 +133,7 @@ Grid.prototype.setWalkableAt = function(x, y, walkable) {
  * @param {boolean} dontCrossCorners
  */
 Grid.prototype.getNeighbors = function(node, allowDiagonal, dontCrossCorners) {
+    console.log("Inside get neighbors");
     var x = node.x,
         y = node.y,
         neighbors = [],
@@ -227,4 +228,6 @@ Grid.prototype.clone = function() {
     return newGrid;
 };
 
-module.exports = Grid;
+export {
+    Grid
+}

@@ -1,5 +1,5 @@
 import {FinderAStar} from './FinderAStar';
-import type { Grid } from '../pathfinding-core/Grid';
+import { Grid } from '../pathfinding-core/Grid';
 import type { XYPosition } from 'react-flow-renderer';
 
 //BestFirstFinder

@@ -1,4 +1,4 @@
-import { Grid } from 'pathfinding';
+import { Grid } from '../pathfinding-core/Grid';
 import {
   guaranteeWalkablePath,
   getNextPointFromPosition,

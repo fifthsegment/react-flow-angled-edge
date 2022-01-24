@@ -25,4 +25,6 @@ function Node(x, y, walkable) {
     this.walkable = (walkable === undefined ? true : walkable);
 };
 
-module.exports = Node;
+export {
+    Node
+}
